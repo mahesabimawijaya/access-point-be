@@ -20,7 +20,9 @@ export class NotificationsService {
 
   async findAll() {
     try {
-      const notifications = await this.notificationRepository.find();
+      const notifications = await this.notificationRepository.find({
+        relations: ['user'],
+      });
 
       return response('Access points fetched', notifications, 200);
     } catch (error) {

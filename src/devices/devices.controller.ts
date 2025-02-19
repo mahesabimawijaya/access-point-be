@@ -25,6 +25,11 @@ export class DevicesController {
     return this.devicesService.findAll();
   }
 
+  @Get('count')
+  deviceCount() {
+    return this.devicesService.getDeviceChartData();
+  }
+
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.devicesService.findOne(+id);

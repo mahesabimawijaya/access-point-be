@@ -20,9 +20,37 @@ export class FirmwaresService {
 
   async findAll() {
     try {
-      const firmwares = await this.firmwareRepository.find();
+      const firmwares = await this.firmwareRepository.find({
+        relations: ['accesspoints'],
+      });
 
       return response('Firmwares fetched', firmwares, 200);
+    } catch (error) {
+      handleException(error, error.message);
+    }
+  }
+
+  async getLatestFirmwareByVersion() {
+    try {
+      const latestFirmware = await this.firmwareRepository
+        .createQueryBuilder('firmware')
+        .select([
+          'firmware.id',
+          'firmware.version',
+          'firmware.description',
+          'firmware.createdAt',
+          'firmware.updatedAt',
+        ])
+        .where('firmware.deletedAt IS NULL') // Ensure active firmwares only
+        .orderBy(`STRING_TO_ARRAY(firmware.version, '.')::int[]`, 'DESC') // Sort by version parts correctly
+        .limit(1)
+        .getOne();
+
+      if (!latestFirmware) {
+        return response('No firmware found', null, 404);
+      }
+
+      return response('Latest firmware fetched', latestFirmware, 200);
     } catch (error) {
       handleException(error, error.message);
     }

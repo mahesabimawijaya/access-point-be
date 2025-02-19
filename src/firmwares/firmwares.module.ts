@@ -9,5 +9,6 @@ import { Accesspoint } from 'src/accesspoints/entities/accesspoint.entity';
   imports: [TypeOrmModule.forFeature([Firmware, Accesspoint])],
   controllers: [FirmwaresController],
   providers: [FirmwaresService],
+  exports: [FirmwaresService],
 })
 export class FirmwaresModule {}

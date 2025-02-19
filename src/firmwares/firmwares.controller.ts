@@ -25,6 +25,11 @@ export class FirmwaresController {
     return this.firmwaresService.findAll();
   }
 
+  @Get('latest')
+  findLatest() {
+    return this.firmwaresService.getLatestFirmwareByVersion();
+  }
+
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.firmwaresService.findOne(+id);
