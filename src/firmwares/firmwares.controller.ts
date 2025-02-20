@@ -6,6 +6,7 @@ import {
   Patch,
   Param,
   Delete,
+  Query,
 } from '@nestjs/common';
 import { FirmwaresService } from './firmwares.service';
 import { CreateFirmwareDto } from './dto/create-firmware.dto';
@@ -21,8 +22,8 @@ export class FirmwaresController {
   }
 
   @Get()
-  findAll() {
-    return this.firmwaresService.findAll();
+  findAll(@Query('sort') sort: string) {
+    return this.firmwaresService.findAll(sort);
   }
 
   @Get('latest')

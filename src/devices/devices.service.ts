@@ -18,10 +18,17 @@ export class DevicesService {
     return 'This action adds a new device';
   }
 
-  async findAll() {
+  async findAll(sort: string) {
     try {
       const devices = await this.deviceRepository.find({
-        relations: ['logs', 'sessions', 'sessions.accesspoint'],
+        relations: ['sessions', 'sessions.accesspoint'],
+        ...(sort && {
+          order: {
+            sessions: {
+              bandwithUsed: sort as 'ASC' | 'DESC',
+            },
+          },
+        }),
       });
 
       return response('Devices fetched', devices, 200);

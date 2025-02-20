@@ -18,10 +18,11 @@ export class FirmwaresService {
     return 'This action adds a new firmware';
   }
 
-  async findAll() {
+  async findAll(sort: string) {
     try {
       const firmwares = await this.firmwareRepository.find({
         relations: ['accesspoints'],
+        ...(sort && { order: { version: sort as 'ASC' | 'DESC' } }),
       });
 
       return response('Firmwares fetched', firmwares, 200);

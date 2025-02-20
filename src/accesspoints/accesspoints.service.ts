@@ -17,10 +17,11 @@ export class AccesspointsService {
     private readonly firmwaresService: FirmwaresService,
   ) {}
 
-  async findAll() {
+  async findAll(sort: string) {
     try {
       const accessPoints = await this.accesspointRepository.find({
         relations: ['sessions', 'firmware'],
+        ...(sort && { order: { temperature: sort as 'ASC' | 'DESC' } }),
       });
 
       return response('Access points fetched', accessPoints, 200);

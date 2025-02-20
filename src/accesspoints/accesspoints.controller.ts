@@ -1,4 +1,4 @@
-import { Controller, Get, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Patch, Param, Delete, Query } from '@nestjs/common';
 import { AccesspointsService } from './accesspoints.service';
 
 @Controller('accesspoints')
@@ -6,8 +6,8 @@ export class AccesspointsController {
   constructor(private readonly accesspointsService: AccesspointsService) {}
 
   @Get()
-  findAll() {
-    return this.accesspointsService.findAll();
+  findAll(@Query('sort') sort: string) {
+    return this.accesspointsService.findAll(sort);
   }
 
   @Get('/count')

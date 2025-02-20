@@ -18,10 +18,11 @@ export class NotificationsService {
     return 'This action adds a new notification';
   }
 
-  async findAll() {
+  async findAll(sort: string) {
     try {
       const notifications = await this.notificationRepository.find({
         relations: ['user'],
+        ...(sort && { order: { createdAt: sort as 'ASC' | 'DESC' } }),
       });
 
       return response('Access points fetched', notifications, 200);
