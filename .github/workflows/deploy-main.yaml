@@ -31,5 +31,5 @@ jobs:
           context: .
           push: true
           tags: |
-            ghcr.io/bandungmantapjiwa/access-point-be:latest
-            ghcr.io/bandungmantapjiwa/access-point-be:${{ github.sha }}
+            ghcr.io/mahesabimawijaya/access-point-be:latest
+            ghcr.io/mahesabimawijaya/access-point-be:${{ github.sha }}
